@@ -153,6 +153,41 @@ body {
     background: rgba(0, 245, 255, 0.1);
 }
 
+.header-right {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.lang-switch {
+    display: flex;
+    gap: 4px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    padding: 4px;
+}
+
+.lang-btn {
+    padding: 6px 12px;
+    background: transparent;
+    border: none;
+    border-radius: 6px;
+    color: var(--text-muted);
+    font-size: 12px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.lang-btn:hover {
+    color: var(--text-secondary);
+}
+
+.lang-btn.active {
+    background: rgba(0, 245, 255, 0.2);
+    color: var(--primary-cyan);
+}
+
 .time-display {
     display: flex;
     flex-direction: column;
@@ -937,6 +972,18 @@ section {
     
     .nav {
         display: none;
+    }
+    
+    .header-right {
+        gap: 12px;
+    }
+    
+    .lang-switch {
+        order: 1;
+    }
+    
+    .time-display {
+        order: 2;
     }
     
     .data-grid {

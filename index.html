@@ -6,7 +6,7 @@
     <title>AI泡沫指数 | AI Bubble Index</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Noto+Sans+SC:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Noto+Sans+SC:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -19,14 +19,20 @@
             <span class="logo-text">AI BUBBLE INDEX</span>
         </div>
         <nav class="nav">
-            <a href="#index" class="nav-link active">指数概览</a>
-            <a href="#data" class="nav-link">数据来源</a>
-            <a href="#methodology" class="nav-link">计算方法</a>
-            <a href="#trends" class="nav-link">趋势分析</a>
+            <a href="#index" class="nav-link active" data-zh="指数概览" data-en="Index Overview">指数概览</a>
+            <a href="#data" class="nav-link" data-zh="数据来源" data-en="Data Sources">数据来源</a>
+            <a href="#methodology" class="nav-link" data-zh="计算方法" data-en="Methodology">计算方法</a>
+            <a href="#trends" class="nav-link" data-zh="趋势分析" data-en="Trend Analysis">趋势分析</a>
         </nav>
-        <div class="time-display">
-            <span class="time-label">更新时间</span>
-            <span class="time-value" id="updateTime"></span>
+        <div class="header-right">
+            <div class="lang-switch">
+                <button class="lang-btn active" data-lang="zh">中文</button>
+                <button class="lang-btn" data-lang="en">EN</button>
+            </div>
+            <div class="time-display">
+                <span class="time-label" data-zh="更新时间" data-en="Updated">更新时间</span>
+                <span class="time-value" id="updateTime"></span>
+            </div>
         </div>
     </header>
 
@@ -35,7 +41,7 @@
         <section class="hero" id="index">
             <div class="hero-glow"></div>
             <div class="index-container">
-                <div class="index-label">全球AI泡沫指数</div>
+                <div class="index-label" data-zh="全球AI泡沫指数" data-en="Global AI Bubble Index">全球AI泡沫指数</div>
                 <div class="index-value-container">
                     <div class="index-ring">
                         <svg viewBox="0 0 200 200" class="ring-svg">
@@ -59,9 +65,9 @@
                 </div>
                 <div class="index-status">
                     <span class="status-indicator high"></span>
-                    <span class="status-text">高风险区域</span>
+                    <span class="status-text" data-zh="高风险区域" data-en="High Risk Zone" data-zh-medium="中等风险" data-en-medium="Medium Risk" data-zh-low="低风险区域" data-en-low="Low Risk Zone">高风险区域</span>
                 </div>
-                <div class="index-description">
+                <div class="index-description" data-zh="基于全球主要媒体对AI企业估值、融资规模、市场情绪等关键数据的综合分析" data-en="Comprehensive analysis based on AI company valuations, funding scale, and market sentiment data from major global media sources">
                     基于全球主要媒体对AI企业估值、融资规模、市场情绪等关键数据的综合分析
                 </div>
             </div>
@@ -71,28 +77,28 @@
                     <div class="stat-icon">📈</div>
                     <div class="stat-content">
                         <div class="stat-value" id="avgValuation">¥2,847亿</div>
-                        <div class="stat-label">AI企业平均估值</div>
+                        <div class="stat-label" data-zh="AI企业平均估值" data-en="Avg. AI Company Valuation">AI企业平均估值</div>
                     </div>
                 </div>
                 <div class="stat-card">
                     <div class="stat-icon">💰</div>
                     <div class="stat-content">
                         <div class="stat-value" id="totalFunding">$1,245亿</div>
-                        <div class="stat-label">年度融资总额</div>
+                        <div class="stat-label" data-zh="年度融资总额" data-en="Annual Total Funding">年度融资总额</div>
                     </div>
                 </div>
                 <div class="stat-card">
                     <div class="stat-icon">🏢</div>
                     <div class="stat-content">
                         <div class="stat-value" id="unicornCount">187</div>
-                        <div class="stat-label">AI独角兽企业</div>
+                        <div class="stat-label" data-zh="AI独角兽企业" data-en="AI Unicorn Companies">AI独角兽企业</div>
                     </div>
                 </div>
                 <div class="stat-card">
                     <div class="stat-icon">📊</div>
                     <div class="stat-content">
                         <div class="stat-value" id="mediaMentions">+342%</div>
-                        <div class="stat-label">媒体关注度增长</div>
+                        <div class="stat-label" data-zh="媒体关注度增长" data-en="Media Attention Growth">媒体关注度增长</div>
                     </div>
                 </div>
             </div>
@@ -102,7 +108,7 @@
         <section class="data-section" id="data">
             <h2 class="section-title">
                 <span class="title-decorator">//</span>
-                数据来源
+                <span data-zh="数据来源" data-en="Data Sources">数据来源</span>
                 <span class="title-subtitle">DATA SOURCES</span>
             </h2>
             
@@ -110,96 +116,96 @@
                 <div class="data-card" data-category="valuation">
                     <div class="card-header">
                         <span class="card-icon">💹</span>
-                        <h3>企业估值数据</h3>
+                        <h3 data-zh="企业估值数据" data-en="Company Valuation Data">企业估值数据</h3>
                     </div>
                     <div class="card-body">
                         <div class="data-item">
                             <span class="data-source">彭博社 Bloomberg</span>
-                            <span class="data-weight">权重 25%</span>
+                            <span class="data-weight" data-zh="权重 25%" data-en="Weight 25%">权重 25%</span>
                         </div>
                         <div class="data-item">
                             <span class="data-source">路透社 Reuters</span>
-                            <span class="data-weight">权重 20%</span>
+                            <span class="data-weight" data-zh="权重 20%" data-en="Weight 20%">权重 20%</span>
                         </div>
                         <div class="data-item">
                             <span class="data-source">金融时报 FT</span>
-                            <span class="data-weight">权重 15%</span>
+                            <span class="data-weight" data-zh="权重 15%" data-en="Weight 15%">权重 15%</span>
                         </div>
                     </div>
                     <div class="card-footer">
-                        <span class="update-freq">实时更新</span>
+                        <span class="update-freq" data-zh="实时更新" data-en="Real-time Update">实时更新</span>
                     </div>
                 </div>
 
                 <div class="data-card" data-category="funding">
                     <div class="card-header">
                         <span class="card-icon">💵</span>
-                        <h3>融资交易数据</h3>
+                        <h3 data-zh="融资交易数据" data-en="Funding Transaction Data">融资交易数据</h3>
                     </div>
                     <div class="card-body">
                         <div class="data-item">
                             <span class="data-source">TechCrunch</span>
-                            <span class="data-weight">权重 18%</span>
+                            <span class="data-weight" data-zh="权重 18%" data-en="Weight 18%">权重 18%</span>
                         </div>
                         <div class="data-item">
                             <span class="data-source">Crunchbase</span>
-                            <span class="data-weight">权重 22%</span>
+                            <span class="data-weight" data-zh="权重 22%" data-en="Weight 22%">权重 22%</span>
                         </div>
                         <div class="data-item">
                             <span class="data-source">PitchBook</span>
-                            <span class="data-weight">权重 15%</span>
+                            <span class="data-weight" data-zh="权重 15%" data-en="Weight 15%">权重 15%</span>
                         </div>
                     </div>
                     <div class="card-footer">
-                        <span class="update-freq">每日更新</span>
+                        <span class="update-freq" data-zh="每日更新" data-en="Daily Update">每日更新</span>
                     </div>
                 </div>
 
                 <div class="data-card" data-category="sentiment">
                     <div class="card-header">
                         <span class="card-icon">📰</span>
-                        <h3>媒体情绪分析</h3>
+                        <h3 data-zh="媒体情绪分析" data-en="Media Sentiment Analysis">媒体情绪分析</h3>
                     </div>
                     <div class="card-body">
                         <div class="data-item">
                             <span class="data-source">华尔街日报 WSJ</span>
-                            <span class="data-weight">权重 20%</span>
+                            <span class="data-weight" data-zh="权重 20%" data-en="Weight 20%">权重 20%</span>
                         </div>
                         <div class="data-item">
                             <span class="data-source">纽约时报 NYT</span>
-                            <span class="data-weight">权重 15%</span>
+                            <span class="data-weight" data-zh="权重 15%" data-en="Weight 15%">权重 15%</span>
                         </div>
                         <div class="data-item">
                             <span class="data-source">财新 Caixin</span>
-                            <span class="data-weight">权重 12%</span>
+                            <span class="data-weight" data-zh="权重 12%" data-en="Weight 12%">权重 12%</span>
                         </div>
                     </div>
                     <div class="card-footer">
-                        <span class="update-freq">每小时更新</span>
+                        <span class="update-freq" data-zh="每小时更新" data-en="Hourly Update">每小时更新</span>
                     </div>
                 </div>
 
                 <div class="data-card" data-category="market">
                     <div class="card-header">
                         <span class="card-icon">🌍</span>
-                        <h3>市场指标</h3>
+                        <h3 data-zh="市场指标" data-en="Market Indicators">市场指标</h3>
                     </div>
                     <div class="card-body">
                         <div class="data-item">
-                            <span class="data-source">纳斯达克 AI指数</span>
-                            <span class="data-weight">权重 25%</span>
+                            <span class="data-source" data-zh="纳斯达克 AI指数" data-en="Nasdaq AI Index">纳斯达克 AI指数</span>
+                            <span class="data-weight" data-zh="权重 25%" data-en="Weight 25%">权重 25%</span>
                         </div>
                         <div class="data-item">
-                            <span class="data-source">标普500科技</span>
-                            <span class="data-weight">权重 20%</span>
+                            <span class="data-source" data-zh="标普500科技" data-en="S&P 500 Tech">标普500科技</span>
+                            <span class="data-weight" data-zh="权重 20%" data-en="Weight 20%">权重 20%</span>
                         </div>
                         <div class="data-item">
-                            <span class="data-source">恒生科技指数</span>
-                            <span class="data-weight">权重 15%</span>
+                            <span class="data-source" data-zh="恒生科技指数" data-en="Hang Seng Tech Index">恒生科技指数</span>
+                            <span class="data-weight" data-zh="权重 15%" data-en="Weight 15%">权重 15%</span>
                         </div>
                     </div>
                     <div class="card-footer">
-                        <span class="update-freq">实时更新</span>
+                        <span class="update-freq" data-zh="实时更新" data-en="Real-time Update">实时更新</span>
                     </div>
                 </div>
             </div>
@@ -209,36 +215,36 @@
         <section class="methodology-section" id="methodology">
             <h2 class="section-title">
                 <span class="title-decorator">//</span>
-                计算方法
+                <span data-zh="计算方法" data-en="Methodology">计算方法</span>
                 <span class="title-subtitle">METHODOLOGY</span>
             </h2>
 
             <div class="methodology-content">
                 <div class="formula-display">
-                    <div class="formula-title">泡沫指数核心公式</div>
+                    <div class="formula-title" data-zh="泡沫指数核心公式" data-en="Bubble Index Core Formula">泡沫指数核心公式</div>
                     <div class="formula-box">
                         <code>BI = α(V/G) + β(F/M) + γ(S) + δ(H)</code>
                     </div>
                     <div class="formula-legend">
                         <div class="legend-item">
                             <span class="legend-symbol">BI</span>
-                            <span class="legend-desc">泡沫指数 (Bubble Index)</span>
+                            <span class="legend-desc" data-zh="泡沫指数 (Bubble Index)" data-en="Bubble Index">泡沫指数 (Bubble Index)</span>
                         </div>
                         <div class="legend-item">
                             <span class="legend-symbol">V/G</span>
-                            <span class="legend-desc">估值/增长率比率</span>
+                            <span class="legend-desc" data-zh="估值/增长率比率" data-en="Valuation/Growth Ratio">估值/增长率比率</span>
                         </div>
                         <div class="legend-item">
                             <span class="legend-symbol">F/M</span>
-                            <span class="legend-desc">融资/市值比率</span>
+                            <span class="legend-desc" data-zh="融资/市值比率" data-en="Funding/Market Cap Ratio">融资/市值比率</span>
                         </div>
                         <div class="legend-item">
                             <span class="legend-symbol">S</span>
-                            <span class="legend-desc">媒体情绪指数</span>
+                            <span class="legend-desc" data-zh="媒体情绪指数" data-en="Media Sentiment Index">媒体情绪指数</span>
                         </div>
                         <div class="legend-item">
                             <span class="legend-symbol">H</span>
-                            <span class="legend-desc">历史对比因子</span>
+                            <span class="legend-desc" data-zh="历史对比因子" data-en="Historical Comparison Factor">历史对比因子</span>
                         </div>
                     </div>
                 </div>
@@ -247,29 +253,37 @@
                     <div class="step">
                         <div class="step-number">01</div>
                         <div class="step-content">
-                            <h4>数据采集</h4>
-                            <p>从全球50+主流媒体和金融数据平台实时采集AI企业相关报道和交易数据</p>
+                            <h4 data-zh="数据采集" data-en="Data Collection">数据采集</h4>
+                            <p data-zh="从全球50+主流媒体和金融数据平台实时采集AI企业相关报道和交易数据" data-en="Real-time collection of AI company reports and transaction data from 50+ major media and financial data platforms worldwide">
+                                从全球50+主流媒体和金融数据平台实时采集AI企业相关报道和交易数据
+                            </p>
                         </div>
                     </div>
                     <div class="step">
                         <div class="step-number">02</div>
                         <div class="step-content">
-                            <h4>NLP情绪分析</h4>
-                            <p>使用自然语言处理技术分析媒体报道的情绪倾向，识别过度乐观或悲观信号</p>
+                            <h4 data-zh="NLP情绪分析" data-en="NLP Sentiment Analysis">NLP情绪分析</h4>
+                            <p data-zh="使用自然语言处理技术分析媒体报道的情绪倾向，识别过度乐观或悲观信号" data-en="Using NLP technology to analyze media sentiment, identifying overly optimistic or pessimistic signals">
+                                使用自然语言处理技术分析媒体报道的情绪倾向，识别过度乐观或悲观信号
+                            </p>
                         </div>
                     </div>
                     <div class="step">
                         <div class="step-number">03</div>
                         <div class="step-content">
-                            <h4>估值建模</h4>
-                            <p>结合传统估值模型与AI行业特性，计算企业合理估值区间与市场溢价</p>
+                            <h4 data-zh="估值建模" data-en="Valuation Modeling">估值建模</h4>
+                            <p data-zh="结合传统估值模型与AI行业特性，计算企业合理估值区间与市场溢价" data-en="Combining traditional valuation models with AI industry characteristics to calculate reasonable valuation ranges and market premiums">
+                                结合传统估值模型与AI行业特性，计算企业合理估值区间与市场溢价
+                            </p>
                         </div>
                     </div>
                     <div class="step">
                         <div class="step-number">04</div>
                         <div class="step-content">
-                            <h4>指数合成</h4>
-                            <p>通过加权算法将多维度指标合成为0-100的泡沫指数，数值越高表示泡沫风险越大</p>
+                            <h4 data-zh="指数合成" data-en="Index Synthesis">指数合成</h4>
+                            <p data-zh="通过加权算法将多维度指标合成为0-100的泡沫指数，数值越高表示泡沫风险越大" data-en="Synthesizing multi-dimensional indicators into a 0-100 bubble index through weighted algorithms; higher values indicate greater bubble risk">
+                                通过加权算法将多维度指标合成为0-100的泡沫指数，数值越高表示泡沫风险越大
+                            </p>
                         </div>
                     </div>
                 </div>
@@ -280,18 +294,18 @@
         <section class="trends-section" id="trends">
             <h2 class="section-title">
                 <span class="title-decorator">//</span>
-                趋势分析
+                <span data-zh="趋势分析" data-en="Trend Analysis">趋势分析</span>
                 <span class="title-subtitle">TREND ANALYSIS</span>
             </h2>
 
             <div class="trends-grid">
                 <div class="chart-container">
                     <div class="chart-header">
-                        <h3>泡沫指数历史走势</h3>
+                        <h3 data-zh="泡沫指数历史走势" data-en="Bubble Index Historical Trend">泡沫指数历史走势</h3>
                         <div class="chart-controls">
-                            <button class="time-btn active" data-range="1m">1月</button>
-                            <button class="time-btn" data-range="3m">3月</button>
-                            <button class="time-btn" data-range="1y">1年</button>
+                            <button class="time-btn active" data-range="1m" data-zh="1月" data-en="1M">1月</button>
+                            <button class="time-btn" data-range="3m" data-zh="3月" data-en="3M">3月</button>
+                            <button class="time-btn" data-range="1y" data-zh="1年" data-en="1Y">1年</button>
                         </div>
                     </div>
                     <div class="chart-wrapper">
@@ -300,10 +314,10 @@
                 </div>
 
                 <div class="metrics-panel">
-                    <h3>关键指标变化</h3>
+                    <h3 data-zh="关键指标变化" data-en="Key Indicator Changes">关键指标变化</h3>
                     <div class="metric-item">
                         <div class="metric-header">
-                            <span class="metric-name">估值溢价率</span>
+                            <span class="metric-name" data-zh="估值溢价率" data-en="Valuation Premium Rate">估值溢价率</span>
                             <span class="metric-change positive">+23.5%</span>
                         </div>
                         <div class="metric-bar">
@@ -313,7 +327,7 @@
                     </div>
                     <div class="metric-item">
                         <div class="metric-header">
-                            <span class="metric-name">融资热度指数</span>
+                            <span class="metric-name" data-zh="融资热度指数" data-en="Funding Heat Index">融资热度指数</span>
                             <span class="metric-change positive">+45.2%</span>
                         </div>
                         <div class="metric-bar">
@@ -323,7 +337,7 @@
                     </div>
                     <div class="metric-item">
                         <div class="metric-header">
-                            <span class="metric-name">媒体乐观度</span>
+                            <span class="metric-name" data-zh="媒体乐观度" data-en="Media Optimism">媒体乐观度</span>
                             <span class="metric-change negative">-8.3%</span>
                         </div>
                         <div class="metric-bar">
@@ -333,7 +347,7 @@
                     </div>
                     <div class="metric-item">
                         <div class="metric-header">
-                            <span class="metric-name">市场波动率</span>
+                            <span class="metric-name" data-zh="市场波动率" data-en="Market Volatility">市场波动率</span>
                             <span class="metric-change positive">+12.7%</span>
                         </div>
                         <div class="metric-bar">
@@ -345,31 +359,37 @@
             </div>
 
             <div class="risk-alerts">
-                <h3>风险预警</h3>
+                <h3 data-zh="风险预警" data-en="Risk Alerts">风险预警</h3>
                 <div class="alert-list">
                     <div class="alert-item high">
                         <span class="alert-icon">⚠️</span>
                         <div class="alert-content">
-                            <strong>高估值警报</strong>
-                            <p>当前AI企业平均估值已达历史峰值的127%，建议投资者保持谨慎</p>
+                            <strong data-zh="高估值警报" data-en="High Valuation Alert">高估值警报</strong>
+                            <p data-zh="当前AI企业平均估值已达历史峰值的127%，建议投资者保持谨慎" data-en="Current average AI company valuation has reached 127% of historical peak; investors should exercise caution">
+                                当前AI企业平均估值已达历史峰值的127%，建议投资者保持谨慎
+                            </p>
                         </div>
-                        <span class="alert-time">2小时前</span>
+                        <span class="alert-time" data-zh="2小时前" data-en="2 hours ago">2小时前</span>
                     </div>
                     <div class="alert-item medium">
                         <span class="alert-icon">📊</span>
                         <div class="alert-content">
-                            <strong>融资集中度上升</strong>
-                            <p>大额融资向头部企业集中，中小AI企业融资难度增加</p>
+                            <strong data-zh="融资集中度上升" data-en="Funding Concentration Rising">融资集中度上升</strong>
+                            <p data-zh="大额融资向头部企业集中，中小AI企业融资难度增加" data-en="Large funding rounds are concentrating on top companies; smaller AI companies face increasing funding difficulty">
+                                大额融资向头部企业集中，中小AI企业融资难度增加
+                            </p>
                         </div>
-                        <span class="alert-time">5小时前</span>
+                        <span class="alert-time" data-zh="5小时前" data-en="5 hours ago">5小时前</span>
                     </div>
                     <div class="alert-item low">
                         <span class="alert-icon">💡</span>
                         <div class="alert-content">
-                            <strong>技术突破信号</strong>
-                            <p>多模态大模型取得重大进展，可能推动新一轮估值重估</p>
+                            <strong data-zh="技术突破信号" data-en="Tech Breakthrough Signal">技术突破信号</strong>
+                            <p data-zh="多模态大模型取得重大进展，可能推动新一轮估值重估" data-en="Multimodal large models have achieved significant progress, potentially driving a new round of valuation reassessment">
+                                多模态大模型取得重大进展，可能推动新一轮估值重估
+                            </p>
                         </div>
-                        <span class="alert-time">1天前</span>
+                        <span class="alert-time" data-zh="1天前" data-en="1 day ago">1天前</span>
                     </div>
                 </div>
             </div>
@@ -383,13 +403,15 @@
                 <span>AI Bubble Index</span>
             </div>
             <div class="footer-links">
-                <a href="#">关于我们</a>
-                <a href="#">数据来源</a>
-                <a href="#">API接口</a>
-                <a href="#">联系我们</a>
+                <a href="#" data-zh="关于我们" data-en="About Us">关于我们</a>
+                <a href="#" data-zh="数据来源" data-en="Data Sources">数据来源</a>
+                <a href="#" data-zh="API接口" data-en="API Access">API接口</a>
+                <a href="#" data-zh="联系我们" data-en="Contact Us">联系我们</a>
             </div>
             <div class="footer-disclaimer">
-                <p>免责声明：本指数仅供参考，不构成投资建议。投资有风险，入市需谨慎。</p>
+                <p data-zh="免责声明：本指数仅供参考，不构成投资建议。投资有风险，入市需谨慎。" data-en="Disclaimer: This index is for reference only and does not constitute investment advice. Investment involves risks; please exercise caution.">
+                    免责声明：本指数仅供参考，不构成投资建议。投资有风险，入市需谨慎。
+                </p>
             </div>
         </div>
     </footer>

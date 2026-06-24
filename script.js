@@ -1,9 +1,114 @@
-// AI Bubble Index - Interactive JavaScript
+// AI Bubble Index - Interactive JavaScript with Multi-language Support
+
+// Current language
+let currentLang = 'zh';
+let trendChart = null;
+
+// Language translations
+const translations = {
+    zh: {
+        chartLabel: 'AI泡沫指数',
+        tooltipDate: '日期: ',
+        tooltipValue: '泡沫指数: ',
+        statusHigh: '高风险区域',
+        statusMedium: '中等风险',
+        statusLow: '低风险区域',
+        consoleMessage: '实时监控AI行业估值泡沫风险'
+    },
+    en: {
+        chartLabel: 'AI Bubble Index',
+        tooltipDate: 'Date: ',
+        tooltipValue: 'Bubble Index: ',
+        statusHigh: 'High Risk Zone',
+        statusMedium: 'Medium Risk',
+        statusLow: 'Low Risk Zone',
+        consoleMessage: 'Real-time monitoring of AI industry valuation bubble risk'
+    }
+};
+
+// Switch language function
+function switchLanguage(lang) {
+    currentLang = lang;
+    
+    // Update all elements with data-zh and data-en attributes
+    document.querySelectorAll('[data-zh]').forEach(el => {
+        if (el.hasAttribute('data-en')) {
+            el.textContent = el.getAttribute(`data-${lang}`);
+        }
+    });
+    
+    // Update language buttons
+    document.querySelectorAll('.lang-btn').forEach(btn => {
+        btn.classList.toggle('active', btn.dataset.lang === lang);
+    });
+    
+    // Update document language attribute
+    document.documentElement.lang = lang === 'zh' ? 'zh-CN' : 'en';
+    
+    // Update time display format
+    updateTimeDisplay();
+    
+    // Update chart if exists
+    if (trendChart) {
+        updateChartLanguage();
+    }
+    
+    // Update status text based on current risk level
+    updateStatusText();
+}
+
+// Update status text based on current language and risk level
+function updateStatusText() {
+    const statusText = document.querySelector('.status-text');
+    const statusIndicator = document.querySelector('.status-indicator');
+    
+    if (!statusText || !statusIndicator) return;
+    
+    const isHigh = statusIndicator.classList.contains('high');
+    const isMedium = statusIndicator.classList.contains('medium');
+    const isLow = statusIndicator.classList.contains('low');
+    
+    if (isHigh) {
+        statusText.textContent = translations[currentLang].statusHigh;
+        statusText.style.color = '#ff4757';
+    } else if (isMedium) {
+        statusText.textContent = translations[currentLang].statusMedium;
+        statusText.style.color = '#ffa502';
+    } else if (isLow) {
+        statusText.textContent = translations[currentLang].statusLow;
+        statusText.style.color = '#2ed573';
+    }
+}
+
+// Update chart language
+function updateChartLanguage() {
+    if (!trendChart) return;
+    
+    const t = translations[currentLang];
+    
+    trendChart.data.datasets[0].label = t.chartLabel;
+    trendChart.options.plugins.tooltip.callbacks.title = function(context) {
+        return t.tooltipDate + context[0].label;
+    };
+    trendChart.options.plugins.tooltip.callbacks.label = function(context) {
+        return t.tooltipValue + context.raw;
+    };
+    
+    trendChart.update();
+}
+
+// Language switch button event listeners
+document.querySelectorAll('.lang-btn').forEach(btn => {
+    btn.addEventListener('click', function() {
+        switchLanguage(this.dataset.lang);
+    });
+});
 
 // Update time display
 function updateTimeDisplay() {
     const now = new Date();
-    const timeStr = now.toLocaleString('zh-CN', {
+    const locale = currentLang === 'zh' ? 'zh-CN' : 'en-US';
+    const timeStr = now.toLocaleString(locale, {
         year: 'numeric',
         month: '2-digit',
         day: '2-digit',
@@ -42,8 +147,9 @@ function generateHistoricalData() {
         const noise = (Math.random() - 0.5) * 8;
         const value = Math.max(40, Math.min(95, baseValue + noise));
         
+        const locale = currentLang === 'zh' ? 'zh-CN' : 'en-US';
         data.push({
-            date: date.toLocaleDateString('zh-CN', { month: 'short', day: 'numeric' }),
+            date: date.toLocaleDateString(locale, { month: 'short', day: 'numeric' }),
             value: Math.round(value * 10) / 10
         });
     }
@@ -54,17 +160,18 @@ function generateHistoricalData() {
 // Initialize Chart
 function initChart() {
     const ctx = document.getElementById('trendChart').getContext('2d');
+    const t = translations[currentLang];
     
     const gradient = ctx.createLinearGradient(0, 0, 0, 300);
     gradient.addColorStop(0, 'rgba(0, 245, 255, 0.5)');
     gradient.addColorStop(1, 'rgba(0, 245, 255, 0.0)');
     
-    new Chart(ctx, {
+    trendChart = new Chart(ctx, {
         type: 'line',
         data: {
             labels: bubbleIndexData.history.map(d => d.date),
             datasets: [{
-                label: 'AI泡沫指数',
+                label: t.chartLabel,
                 data: bubbleIndexData.history.map(d => d.value),
                 borderColor: '#00f5ff',
                 backgroundColor: gradient,
@@ -98,10 +205,10 @@ function initChart() {
                     displayColors: false,
                     callbacks: {
                         title: function(context) {
-                            return '日期: ' + context[0].label;
+                            return t.tooltipDate + context[0].label;
                         },
                         label: function(context) {
-                            return '泡沫指数: ' + context.raw;
+                            return t.tooltipValue + context.raw;
                         }
                     }
                 }
@@ -268,17 +375,14 @@ function simulateIndexChange() {
     
     if (bubbleIndexData.current > 75) {
         statusIndicator.className = 'status-indicator high';
-        statusText.textContent = '高风险区域';
-        statusText.style.color = '#ff4757';
     } else if (bubbleIndexData.current > 60) {
         statusIndicator.className = 'status-indicator medium';
-        statusText.textContent = '中等风险';
-        statusText.style.color = '#ffa502';
     } else {
         statusIndicator.className = 'status-indicator low';
-        statusText.textContent = '低风险区域';
-        statusText.style.color = '#2ed573';
     }
+    
+    // Update status text based on language
+    updateStatusText();
 }
 
 // Update index every 5 seconds for demo
@@ -286,4 +390,4 @@ setInterval(simulateIndexChange, 5000);
 
 // Console welcome message
 console.log('%c AI Bubble Index System ', 'background: linear-gradient(135deg, #00f5ff, #ff00ff); color: #fff; font-size: 20px; padding: 10px;');
-console.log('%c 实时监控AI行业估值泡沫风险 ', 'color: #00f5ff; font-size: 14px;');
+console.log('%c ' + translations[currentLang].consoleMessage, 'color: #00f5ff; font-size: 14px;');
