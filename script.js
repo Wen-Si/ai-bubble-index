@@ -13,7 +13,27 @@ const translations = {
         statusHigh: '高风险区域',
         statusMedium: '中等风险',
         statusLow: '低风险区域',
-        consoleMessage: '实时监控AI行业估值泡沫风险'
+        consoleMessage: '实时监控AI行业估值泡沫风险',
+        riskCritical: '极高风险',
+        riskHigh: '高风险',
+        riskMedium: '中等风险',
+        bubbleChartX: '预估营收 (亿美元)',
+        bubbleChartY: '估值 (亿美元)',
+        bubbleChartSize: '泡沫评分',
+        sectorLabels: {
+            'LLM': '大模型',
+            'Infra': 'AI基础设施',
+            'Robotics': '机器人',
+            'Vision': '计算机视觉',
+            'Voice': '语音AI',
+            'Search': 'AI搜索',
+            'Video': 'AI视频',
+            'Coding': 'AI编程',
+            'Enterprise': '企业AI',
+            'Chip': 'AI芯片',
+            'Data': '数据平台',
+            'Safety': 'AI安全'
+        }
     },
     en: {
         chartLabel: 'AI Bubble Index',
@@ -22,7 +42,27 @@ const translations = {
         statusHigh: 'High Risk Zone',
         statusMedium: 'Medium Risk',
         statusLow: 'Low Risk Zone',
-        consoleMessage: 'Real-time monitoring of AI industry valuation bubble risk'
+        consoleMessage: 'Real-time monitoring of AI industry valuation bubble risk',
+        riskCritical: 'Critical',
+        riskHigh: 'High',
+        riskMedium: 'Medium',
+        bubbleChartX: 'Est. Revenue ($B)',
+        bubbleChartY: 'Valuation ($B)',
+        bubbleChartSize: 'Bubble Score',
+        sectorLabels: {
+            'LLM': 'LLM',
+            'Infra': 'AI Infra',
+            'Robotics': 'Robotics',
+            'Vision': 'Computer Vision',
+            'Voice': 'Voice AI',
+            'Search': 'AI Search',
+            'Video': 'AI Video',
+            'Coding': 'AI Coding',
+            'Enterprise': 'Enterprise AI',
+            'Chip': 'AI Chip',
+            'Data': 'Data Platform',
+            'Safety': 'AI Safety'
+        }
     }
 };
 
@@ -95,6 +135,246 @@ function updateChartLanguage() {
     };
     
     trendChart.update();
+    
+    // Also re-render companies table and bubble chart
+    renderCompaniesTable(currentFilter);
+    if (bubbleChart) {
+        updateBubbleChartLanguage();
+    }
+}
+
+// ===== Bubble Companies Data =====
+let bubbleChart = null;
+let currentFilter = 'all';
+
+const companiesData = [
+    { name: 'OpenAI', sector: 'LLM', valuation: 860, revenue: 6.5, score: 95, risk: 'critical', color: '#10a37f' },
+    { name: 'xAI', sector: 'LLM', valuation: 500, revenue: 1.0, score: 92, risk: 'critical', color: '#1d9bf0' },
+    { name: 'Anthropic', sector: 'LLM', valuation: 400, revenue: 4.0, score: 88, risk: 'critical', color: '#d97757' },
+    { name: 'Perplexity', sector: 'Search', valuation: 90, revenue: 0.08, score: 85, risk: 'critical', color: '#20b8cd' },
+    { name: 'Mistral AI', sector: 'LLM', valuation: 65, revenue: 0.03, score: 83, risk: 'critical', color: '#fa520f' },
+    { name: 'Cohere', sector: 'LLM', valuation: 55, revenue: 0.05, score: 78, risk: 'high', color: '#39594d' },
+    { name: 'Figure', sector: 'Robotics', valuation: 26, revenue: 0.01, score: 76, risk: 'high', color: '#1a1a2e' },
+    { name: 'Glean', sector: 'Enterprise', valuation: 46, revenue: 0.15, score: 74, risk: 'high', color: '#7c3aed' },
+    { name: 'Runway', sector: 'Video', valuation: 30, revenue: 0.05, score: 72, risk: 'high', color: '#000000' },
+    { name: 'Adept', sector: 'Enterprise', valuation: 10, revenue: 0.02, score: 70, risk: 'high', color: '#6366f1' },
+    { name: 'Inflection AI', sector: 'LLM', valuation: 40, revenue: 0.01, score: 69, risk: 'high', color: '#ff6b6b' },
+    { name: 'Scale AI', sector: 'Data', valuation: 140, revenue: 5.0, score: 68, risk: 'high', color: '#8b5cf6' },
+    { name: 'Replit', sector: 'Coding', valuation: 12, revenue: 0.03, score: 65, risk: 'high', color: '#f26207' },
+    { name: 'ElevenLabs', sector: 'Voice', valuation: 33, revenue: 0.08, score: 63, risk: 'medium', color: '#000000' },
+    { name: 'Pika', sector: 'Video', valuation: 5, revenue: 0.01, score: 60, risk: 'medium', color: '#6c2bd9' },
+    { name: 'Harvey', sector: 'Enterprise', valuation: 36, revenue: 0.1, score: 58, risk: 'medium', color: '#4f46e5' },
+    { name: 'Poolside', sector: 'Coding', valuation: 28, revenue: 0.005, score: 55, risk: 'medium', color: '#0ea5e9' },
+    { name: 'Anysphere', sector: 'Coding', valuation: 25, revenue: 0.04, score: 52, risk: 'medium', color: '#f59e0b' }
+];
+
+// Render companies table
+function renderCompaniesTable(filter) {
+    const tbody = document.getElementById('companiesTableBody');
+    if (!tbody) return;
+    
+    const t = translations[currentLang];
+    const filtered = filter === 'all' ? companiesData : companiesData.filter(c => c.risk === filter);
+    
+    tbody.innerHTML = filtered.map(company => {
+        const psRatio = company.revenue > 0 ? (company.valuation / company.revenue).toFixed(0) : 'N/A';
+        const psClass = psRatio > 80 ? 'extreme' : psRatio > 40 ? 'high' : 'moderate';
+        const riskText = company.risk === 'critical' ? t.riskCritical : company.risk === 'high' ? t.riskHigh : t.riskMedium;
+        const sectorText = t.sectorLabels[company.sector] || company.sector;
+        const revenueStr = company.revenue < 0.1 ? (company.revenue * 1000).toFixed(0) + 'M' : '$' + company.revenue.toFixed(1) + 'B';
+        const valuationStr = '$' + company.valuation + 'B';
+        const initials = company.name.substring(0, 2).toUpperCase();
+        
+        return `
+            <tr data-risk="${company.risk}">
+                <td>
+                    <div class="company-name">
+                        <div class="company-logo" style="background: ${company.color}">${initials}</div>
+                        <span class="company-name-text">${company.name}</span>
+                    </div>
+                </td>
+                <td><span class="sector-tag">${sectorText}</span></td>
+                <td class="valuation-cell">${valuationStr}</td>
+                <td>${revenueStr}</td>
+                <td><span class="ps-ratio ${psClass}">${psRatio}x</span></td>
+                <td>
+                    <div class="bubble-score-cell">
+                        <div class="bubble-score-bar">
+                            <div class="bubble-score-fill ${company.risk}" style="width: ${company.score}%"></div>
+                        </div>
+                        <span class="bubble-score-num" style="color: ${company.risk === 'critical' ? '#ff4757' : company.risk === 'high' ? '#ffa502' : '#2ed573'}">${company.score}</span>
+                    </div>
+                </td>
+                <td><span class="risk-badge ${company.risk}">${riskText}</span></td>
+            </tr>
+        `;
+    }).join('');
+    
+    // Animate score bars
+    setTimeout(() => {
+        document.querySelectorAll('.bubble-score-fill').forEach(fill => {
+            fill.style.width = fill.style.width;
+        });
+    }, 100);
+}
+
+// Update summary counts
+function updateSummaryCounts() {
+    const critical = companiesData.filter(c => c.risk === 'critical').length;
+    const high = companiesData.filter(c => c.risk === 'high').length;
+    const medium = companiesData.filter(c => c.risk === 'medium').length;
+    const total = companiesData.length;
+    
+    const criticalEl = document.getElementById('criticalCount');
+    const highEl = document.getElementById('highCount');
+    const mediumEl = document.getElementById('mediumCount');
+    const totalEl = document.getElementById('totalCount');
+    
+    if (criticalEl) criticalEl.textContent = critical;
+    if (highEl) highEl.textContent = high;
+    if (mediumEl) mediumEl.textContent = medium;
+    if (totalEl) totalEl.textContent = total;
+}
+
+// Filter buttons
+document.querySelectorAll('.filter-btn').forEach(btn => {
+    btn.addEventListener('click', function() {
+        document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+        this.classList.add('active');
+        currentFilter = this.dataset.filter;
+        renderCompaniesTable(currentFilter);
+    });
+});
+
+// Initialize bubble chart
+function initBubbleChart() {
+    const ctx = document.getElementById('bubbleChart');
+    if (!ctx) return;
+    
+    const t = translations[currentLang];
+    
+    const criticalData = companiesData.filter(c => c.risk === 'critical').map(c => ({
+        x: c.revenue, y: c.valuation, r: Math.sqrt(c.score) * 2, company: c.name
+    }));
+    const highData = companiesData.filter(c => c.risk === 'high').map(c => ({
+        x: c.revenue, y: c.valuation, r: Math.sqrt(c.score) * 2, company: c.name
+    }));
+    const mediumData = companiesData.filter(c => c.risk === 'medium').map(c => ({
+        x: c.revenue, y: c.valuation, r: Math.sqrt(c.score) * 2, company: c.name
+    }));
+    
+    bubbleChart = new Chart(ctx, {
+        type: 'bubble',
+        data: {
+            datasets: [
+                {
+                    label: t.riskCritical,
+                    data: criticalData,
+                    backgroundColor: 'rgba(255, 71, 87, 0.6)',
+                    borderColor: '#ff4757',
+                    borderWidth: 2
+                },
+                {
+                    label: t.riskHigh,
+                    data: highData,
+                    backgroundColor: 'rgba(255, 165, 2, 0.6)',
+                    borderColor: '#ffa502',
+                    borderWidth: 2
+                },
+                {
+                    label: t.riskMedium,
+                    data: mediumData,
+                    backgroundColor: 'rgba(46, 213, 115, 0.6)',
+                    borderColor: '#2ed573',
+                    borderWidth: 2
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    position: 'top',
+                    labels: {
+                        color: 'rgba(255, 255, 255, 0.7)',
+                        font: { size: 12 },
+                        padding: 20
+                    }
+                },
+                tooltip: {
+                    backgroundColor: 'rgba(15, 15, 25, 0.9)',
+                    titleColor: '#00f5ff',
+                    bodyColor: '#fff',
+                    borderColor: 'rgba(0, 245, 255, 0.3)',
+                    borderWidth: 1,
+                    padding: 12,
+                    callbacks: {
+                        title: function(context) {
+                            return context[0].raw.company;
+                        },
+                        label: function(context) {
+                            const t = translations[currentLang];
+                            return [
+                                t.bubbleChartY + ': $' + context.raw.y + 'B',
+                                t.bubbleChartX + ': $' + context.raw.x + 'B',
+                                t.bubbleChartSize + ': ' + companiesData.find(c => c.name === context.raw.company).score
+                            ];
+                        }
+                    }
+                }
+            },
+            scales: {
+                x: {
+                    title: {
+                        display: true,
+                        text: t.bubbleChartX,
+                        color: 'rgba(255, 255, 255, 0.5)',
+                        font: { size: 12 }
+                    },
+                    grid: { color: 'rgba(255, 255, 255, 0.05)' },
+                    ticks: {
+                        color: 'rgba(255, 255, 255, 0.5)',
+                        font: { size: 11 },
+                        callback: function(value) { return '$' + value + 'B'; }
+                    }
+                },
+                y: {
+                    title: {
+                        display: true,
+                        text: t.bubbleChartY,
+                        color: 'rgba(255, 255, 255, 0.5)',
+                        font: { size: 12 }
+                    },
+                    grid: { color: 'rgba(255, 255, 255, 0.05)' },
+                    ticks: {
+                        color: 'rgba(255, 255, 255, 0.5)',
+                        font: { size: 11 },
+                        callback: function(value) { return '$' + value + 'B'; }
+                    }
+                }
+            },
+            animation: {
+                duration: 1500,
+                easing: 'easeOutQuart'
+            }
+        }
+    });
+}
+
+// Update bubble chart language
+function updateBubbleChartLanguage() {
+    if (!bubbleChart) return;
+    
+    const t = translations[currentLang];
+    
+    bubbleChart.data.datasets[0].label = t.riskCritical;
+    bubbleChart.data.datasets[1].label = t.riskHigh;
+    bubbleChart.data.datasets[2].label = t.riskMedium;
+    bubbleChart.options.scales.x.title.text = t.bubbleChartX;
+    bubbleChart.options.scales.y.title.text = t.bubbleChartY;
+    
+    bubbleChart.update();
 }
 
 // Language switch button event listeners
@@ -341,6 +621,11 @@ document.querySelectorAll('.stat-card, .data-card, .step, .alert-item').forEach(
 // Initialize chart when page loads
 document.addEventListener('DOMContentLoaded', function() {
     initChart();
+    
+    // Initialize companies section
+    updateSummaryCounts();
+    renderCompaniesTable('all');
+    initBubbleChart();
     
     // Add initial animation to main index
     const mainIndexEl = document.querySelector('.value-number');

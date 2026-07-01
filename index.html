@@ -22,6 +22,7 @@
             <a href="#index" class="nav-link active" data-zh="指数概览" data-en="Index Overview">指数概览</a>
             <a href="#data" class="nav-link" data-zh="数据来源" data-en="Data Sources">数据来源</a>
             <a href="#methodology" class="nav-link" data-zh="计算方法" data-en="Methodology">计算方法</a>
+            <a href="#companies" class="nav-link" data-zh="泡沫公司" data-en="Bubble Companies">泡沫公司</a>
             <a href="#trends" class="nav-link" data-zh="趋势分析" data-en="Trend Analysis">趋势分析</a>
         </nav>
         <div class="header-right">
@@ -286,6 +287,75 @@
                             </p>
                         </div>
                     </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Bubble Companies Section -->
+        <section class="companies-section" id="companies">
+            <h2 class="section-title">
+                <span class="title-decorator">//</span>
+                <span data-zh="估值泡沫公司" data-en="Bubble Valuation Companies">估值泡沫公司</span>
+                <span class="title-subtitle">BUBBLE COMPANIES</span>
+            </h2>
+
+            <div class="companies-intro">
+                <p data-zh="以下AI企业当前估值显著高于行业合理区间，存在较高的估值泡沫风险。泡沫评分基于估值/营收比、融资轮溢价、市场情绪等多维度计算。" data-en="The following AI companies currently have valuations significantly above reasonable industry ranges, indicating high bubble risk. Bubble scores are calculated based on valuation/revenue ratio, funding round premium, market sentiment, and other dimensions.">
+                    以下AI企业当前估值显著高于行业合理区间，存在较高的估值泡沫风险。泡沫评分基于估值/营收比、融资轮溢价、市场情绪等多维度计算。
+                </p>
+            </div>
+
+            <div class="companies-summary">
+                <div class="summary-card critical">
+                    <div class="summary-count" id="criticalCount">5</div>
+                    <div class="summary-label" data-zh="极高风险" data-en="Critical Risk">极高风险</div>
+                </div>
+                <div class="summary-card high">
+                    <div class="summary-count" id="highCount">7</div>
+                    <div class="summary-label" data-zh="高风险" data-en="High Risk">高风险</div>
+                </div>
+                <div class="summary-card medium">
+                    <div class="summary-count" id="mediumCount">6</div>
+                    <div class="summary-label" data-zh="中等风险" data-en="Medium Risk">中等风险</div>
+                </div>
+                <div class="summary-card total">
+                    <div class="summary-count" id="totalCount">18</div>
+                    <div class="summary-label" data-zh="监测公司总数" data-en="Total Monitored">监测公司总数</div>
+                </div>
+            </div>
+
+            <div class="filter-controls">
+                <button class="filter-btn active" data-filter="all" data-zh="全部" data-en="All">全部</button>
+                <button class="filter-btn" data-filter="critical" data-zh="极高风险" data-en="Critical">极高风险</button>
+                <button class="filter-btn" data-filter="high" data-zh="高风险" data-en="High">高风险</button>
+                <button class="filter-btn" data-filter="medium" data-zh="中等风险" data-en="Medium">中等风险</button>
+            </div>
+
+            <div class="companies-table-wrapper">
+                <table class="companies-table">
+                    <thead>
+                        <tr>
+                            <th data-zh="公司" data-en="Company">公司</th>
+                            <th data-zh="领域" data-en="Sector">领域</th>
+                            <th data-zh="最新估值" data-en="Latest Valuation">最新估值</th>
+                            <th data-zh="预估营收" data-en="Est. Revenue">预估营收</th>
+                            <th data-zh="P/S 倍数" data-en="P/S Ratio">P/S 倍数</th>
+                            <th data-zh="泡沫评分" data-en="Bubble Score">泡沫评分</th>
+                            <th data-zh="风险等级" data-en="Risk Level">风险等级</th>
+                        </tr>
+                    </thead>
+                    <tbody id="companiesTableBody">
+                        <!-- Populated by JavaScript -->
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="bubble-chart-container">
+                <div class="chart-header">
+                    <h3 data-zh="估值 vs 营收 泡泡图" data-en="Valuation vs Revenue Bubble Chart">估值 vs 营收 泡泡图</h3>
+                </div>
+                <div class="bubble-chart-wrapper">
+                    <canvas id="bubbleChart"></canvas>
                 </div>
             </div>
         </section>
